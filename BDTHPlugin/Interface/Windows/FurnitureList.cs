@@ -49,7 +49,7 @@ namespace BDTHPlugin.Interface.Windows
       ImGui.Separator();
       ImGui.PopStyleVar();
 
-      ImGui.BeginChild("FurnishingList");
+      ImGui.BeginChild("家具列表");
 
       if (Plugin.ClientState.LocalPlayer == null)
         return;
@@ -58,11 +58,11 @@ namespace BDTHPlugin.Interface.Windows
       // An active item is being selected.
       // var hasActiveItem = Memory.HousingStructure->ActiveItem != null;
 
-      if (ImGui.BeginTable("FurnishingListItems", 3))
+      if (ImGui.BeginTable("家具列表", 3))
       {
-        ImGui.TableSetupColumn("Icon", ImGuiTableColumnFlags.WidthFixed, 0f);
-        ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch, 0f);
-        ImGui.TableSetupColumn("Distance", ImGuiTableColumnFlags.WidthFixed, 0f);
+        ImGui.TableSetupColumn("图标", ImGuiTableColumnFlags.WidthFixed, 0f);
+        ImGui.TableSetupColumn("名字", ImGuiTableColumnFlags.WidthStretch, 0f);
+        ImGui.TableSetupColumn("距离", ImGuiTableColumnFlags.WidthFixed, 0f);
 
         try
         {
