@@ -46,36 +46,36 @@ namespace BDTHPlugin.Interface.Windows
       ImGui.BeginGroup();
 
       var placeAnywhere = Configuration.PlaceAnywhere;
-      if (ImGui.Checkbox("Place Anywhere", ref placeAnywhere))
+      if (ImGui.Checkbox("任意摆放", ref placeAnywhere))
       {
         // Set the place anywhere based on the checkbox state.
         Memory.SetPlaceAnywhere(placeAnywhere);
         Configuration.PlaceAnywhere = placeAnywhere;
         Configuration.Save();
       }
-      DrawTooltip("Allows the placement of objects without limitation from the game engine.");
+      DrawTooltip("允许放置对象，不受游戏引擎的限制。");
 
       ImGui.SameLine();
 
       // Checkbox is clicked, set the configuration and save.
       var useGizmo = Configuration.UseGizmo;
-      if (ImGui.Checkbox("Gizmo", ref useGizmo))
+      if (ImGui.Checkbox("箭头", ref useGizmo))
       {
         Configuration.UseGizmo = useGizmo;
         Configuration.Save();
       }
-      DrawTooltip("Displays a movement gizmo on the selected item to allow for in-game movement on all axis.");
+      DrawTooltip("在所选项目上显示移动小控件，以允许在所有轴上进行游戏内移动。");
 
       ImGui.SameLine();
 
       // Checkbox is clicked, set the configuration and save.
       var doSnap = Configuration.DoSnap;
-      if (ImGui.Checkbox("Snap", ref doSnap))
+      if (ImGui.Checkbox("同步", ref doSnap))
       {
         Configuration.DoSnap = doSnap;
         Configuration.Save();
       }
-      DrawTooltip("Enables snapping of gizmo movement based on the drag value set below.");
+      DrawTooltip("允许根据下面设置的拖动值捕捉小控件移动。");
 
       ImGui.SameLine();
       if (ImGuiComponents.IconButton(1, Gizmo.Mode == MODE.LOCAL ? Dalamud.Interface.FontAwesomeIcon.ArrowsAlt : Dalamud.Interface.FontAwesomeIcon.Globe))
@@ -84,19 +84,19 @@ namespace BDTHPlugin.Interface.Windows
       DrawTooltip(
       [
         $"Mode: {(Gizmo.Mode == MODE.LOCAL ? "Local" : "World")}",
-        "Changes gizmo mode between local and world movement."
+        "在本地和世界移动之间更改小控件模式。"
       ]);
 
       ImGui.Separator();
 
       if (Memory.HousingStructure->Mode == HousingLayoutMode.None)
-        DrawError("Enter housing mode to get started");
+        DrawError("进入装修模式开始");
       else if (PluginMemory.GamepadMode)
-        DrawError("Does not support Gamepad");
+        DrawError("不支持手柄");
       else if (Memory.HousingStructure->ActiveItem == null || Memory.HousingStructure->Mode != HousingLayoutMode.Rotate)
       {
-        DrawError("Select a housing item in Rotate mode");
-        ImGuiComponents.HelpMarker("Are you doing everything right? Try using the /bdth debug command and report this issue in Discord!");
+        DrawError("在旋转模式下选择一个家具");
+        ImGuiComponents.HelpMarker("尝试使用/bdth debug命令并在Discord中报告此问题！");
       }
       else
         ItemControls.Draw();
@@ -105,18 +105,18 @@ namespace BDTHPlugin.Interface.Windows
 
       // Drag amount for the inputs.
       var drag = Configuration.Drag;
-      if (ImGui.InputFloat("drag", ref drag, 0.05f))
+      if (ImGui.InputFloat("距离", ref drag, 0.05f))
       {
         drag = Math.Min(Math.Max(0.001f, drag), 10f);
         Configuration.Drag = drag;
         Configuration.Save();
       }
-      DrawTooltip("Sets the amount to change when dragging the controls, also influences the gizmo snap feature.");
+      DrawTooltip("设置拖动控件时要更改的量，也会影响小控件捕捉功能");
 
       var dummyHousingGoods = PluginMemory.HousingGoods != null && PluginMemory.HousingGoods->IsVisible;
       var dummyInventory = Memory.InventoryVisible;
 
-      if (ImGui.Checkbox("Display in-game list", ref dummyHousingGoods))
+      if (ImGui.Checkbox("显示家具列表", ref dummyHousingGoods))
       {
         Memory.ShowFurnishingList(dummyHousingGoods);
 
@@ -125,7 +125,7 @@ namespace BDTHPlugin.Interface.Windows
       }
       ImGui.SameLine();
 
-      if (ImGui.Checkbox("Display inventory", ref dummyInventory))
+      if (ImGui.Checkbox("显示背包", ref dummyInventory))
       {
         Memory.ShowInventory(dummyInventory);
 
@@ -133,16 +133,16 @@ namespace BDTHPlugin.Interface.Windows
         Configuration.Save();
       }
 
-      if (ImGui.Button("Open Furnishing List"))
+      if (ImGui.Button("附近家具列表"))
         Plugin.CommandManager.ProcessCommand("/bdth list");
       DrawTooltip(
       [
-        "Opens a furnishing list that you can use to sort by distance and click to select objects.",
-        "NOTE: Does not currently work outdoors!"
+        "打开一个家具列表，您可以使用它按距离排序，然后单击以选择对象。",
+        "注意：目前不在房屋内！"
       ]);
 
       var autoVisible = Configuration.AutoVisible;
-      if (ImGui.Checkbox("Auto Open", ref autoVisible))
+      if (ImGui.Checkbox("自动打开", ref autoVisible))
       {
         Configuration.AutoVisible = autoVisible;
         Configuration.Save();
